@@ -44,7 +44,7 @@ int section = -1; // section of leds being used
 
 CRGB leds_1[NUM_LEDS_1]; // 2 led strips
 int shelfColor[NUM_SEC_1][3] = {{255,255,255}, {255,255,255},{255,255,255},{255,255,255},{255,255,255},{255,255,255},{255,255,255},{255,255,255}};
-int sec_led_map[NUM_SEC_1] = {9,9,9,9,9,9,9,9};//number of leds per section: 0-if section is off; 1- if section is on
+int sec_led_map[NUM_SEC_1] = {9,9,9,9,9,9,9,9};//number of leds per section: 
 int section_1 = -1; // section of leds being used
 
 
@@ -92,7 +92,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
   
   if(strcmp(topic,topicMoodSection) == 0){//mood sections topic  
     CRGB sec_color = CRGB(secColor[0], secColor[1], secColor[2]);
-    client.publish("mood/section/status", payloadChar);
+
+    int len = strlen(payloadChar);
+    client.publish("mood/section/status", payloadChar, true);
+
     sectionTimer.RESET;
     
     
@@ -122,7 +125,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     
   }
   if(strcmp(topic,topicMoodSectionColor) == 0){
-    client.publish("mood/section/color/status", payloadChar);
+    client.publish("mood/section/color/status", payloadChar, true);
     char * token = strtok(payloadChar, ",");
     int aux[3];
     aux[0] = atoi(token);
@@ -137,7 +140,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   if(strcmp(topic, topicMoodStatus)==0){//led moods status
     CRGB aux_color;
-    client.publish("mood/state/status", payloadChar);
+    client.publish("mood/state/status", payloadChar, true);
     
     if(strcmp(payloadChar, "1")==0){ //neutral mood
       Serial.println("Mood service ON"); 
@@ -174,7 +177,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     } 
    }
    if(strcmp(topic, topicMoodColor_1)==0){
-    client.publish("mood/color/1/status", payloadChar);
+    client.publish("mood/color/1/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -188,7 +191,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
    }
    if(strcmp(topic, topicMoodColor_2)==0){
-    client.publish("mood/color/2/status", payloadChar);
+    client.publish("mood/color/2/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -201,7 +204,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
    }
    if(strcmp(topic, topicMoodColor_3)==0){
-    client.publish("mood/color/3/status", payloadChar);
+    client.publish("mood/color/3/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -214,7 +217,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
        
    }
    if(strcmp(topic, topicMoodColor_4)==0){
-    client.publish("mood/color/4/status", payloadChar);
+    client.publish("mood/color/4/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -227,7 +230,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
    }
    if(strcmp(topic, topicMoodColor_5)==0){
-    client.publish("mood/color/5/status", payloadChar);
+    client.publish("mood/color/5/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -240,7 +243,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
    }
    if(strcmp(topic, topicMoodColor_6)==0){
-    client.publish("mood/color/6/status", payloadChar);
+    client.publish("mood/color/6/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -255,7 +258,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
    if(strcmp(topic, topicShelf1)==0){//led shelves topic
     CRGB aux_color;
     shelfTimer.RESET;
-    client.publish("shelf1/status", payloadChar);
+    client.publish("shelf1/status", payloadChar, true);
+
     
       if (strcmp(payloadChar, "1")==0) {
         Serial.println("WINE");
@@ -285,7 +289,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
       }
     }
     if(strcmp(topic, topicShelf2) == 0){
-      client.publish("shelf2/status", payloadChar);
+      client.publish("shelf2/status", payloadChar, true);
+
       CRGB aux_color;
       shelfTimer.RESET;
       if(strcmp(payloadChar, "1")==0){
@@ -316,7 +321,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       } 
     }
     if(strcmp(topic,topicShelfColor_0) == 0){
-      client.publish("shelf/color/0/status", payloadChar);
+      client.publish("shelf/color/0/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -329,7 +334,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
      
     }
     if(strcmp(topic,topicShelfColor_1) == 0){
-      client.publish("shelf/color/1/status", payloadChar);
+      client.publish("shelf/color/1/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -343,7 +348,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
     }
     if(strcmp(topic,topicShelfColor_2) == 0){
-      client.publish("shelf/color/2/status", payloadChar);
+      client.publish("shelf/color/2/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -357,7 +362,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
     }
     if(strcmp(topic,topicShelfColor_3) == 0){
-      client.publish("shelf/color/3/status", payloadChar);
+      client.publish("shelf/color/3/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -370,7 +375,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
     }
     if(strcmp(topic,topicShelfColor_4) == 0){
-      client.publish("shelf/color/4/status", payloadChar);
+      client.publish("shelf/color/4/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -383,7 +388,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
     }
     if(strcmp(topic,topicShelfColor_5) == 0){
-      client.publish("shelf/color/5/status", payloadChar);
+      client.publish("shelf/color/5/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -396,7 +401,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
     }
     if(strcmp(topic,topicShelfColor_6) == 0){ 
-      client.publish("shelf/color/6/status", payloadChar);
+      client.publish("shelf/color/6/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -409,7 +414,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
       
     }
     if(strcmp(topic,topicShelfColor_7) == 0){
-      client.publish("shelf/color/7/status", payloadChar);
+      client.publish("shelf/color/7/status", payloadChar, true);
       char * token = strtok(payloadChar, ",");
       int aux[3];
       aux[0] = atoi(token);
@@ -530,6 +535,8 @@ void loop() {
   //turn off leds
   handle_led_sec(section,moodColor_aux , main_led_map, NUM_LEDS, leds, 0);
   Serial.println("timer 1 off");
+  section = -1;
+
  }
  if(shelfTimer.TRIGGERED){
   handle_led_sec(section_1, CRGB::Black, sec_led_map, NUM_LEDS_1, leds_1, 1); 
