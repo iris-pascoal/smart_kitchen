@@ -92,8 +92,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
   
   if(strcmp(topic,topicMoodSection) == 0){//mood sections topic  
     CRGB sec_color = CRGB(secColor[0], secColor[1], secColor[2]);
+
     int len = strlen(payloadChar);
     client.publish("mood/section/status", payloadChar, true);
+
     sectionTimer.RESET;
     
     
@@ -257,6 +259,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     CRGB aux_color;
     shelfTimer.RESET;
     client.publish("shelf1/status", payloadChar, true);
+
     
       if (strcmp(payloadChar, "1")==0) {
         Serial.println("WINE");
@@ -287,6 +290,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     }
     if(strcmp(topic, topicShelf2) == 0){
       client.publish("shelf2/status", payloadChar, true);
+
       CRGB aux_color;
       shelfTimer.RESET;
       if(strcmp(payloadChar, "1")==0){
@@ -532,6 +536,7 @@ void loop() {
   handle_led_sec(section,moodColor_aux , main_led_map, NUM_LEDS, leds, 0);
   Serial.println("timer 1 off");
   section = -1;
+
  }
  if(shelfTimer.TRIGGERED){
   handle_led_sec(section_1, CRGB::Black, sec_led_map, NUM_LEDS_1, leds_1, 1); 
