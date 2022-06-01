@@ -342,13 +342,8 @@ void init_easyVR(){
     {
       pcSerial.print("Error ");
       pcSerial.println(err, HEX);
-      pcSerial.println(err);
       mqttClient.publish(topicVRCommandLog, "Error:");
       mqttClient.publish(topicVRCommandLog, err);
-
-      switch(err){
-        case '11h': pcSerial.print("Recognition Failed");
-      }
     }
   }
 }
@@ -362,8 +357,9 @@ void action()
     {
     case G0_KITCHEN:
       // write your action code here
-      int len = strlen("WAKE_UP_KITCHEN");
       mqttClient.publish(topicVRCommand, "WAKE_UP_KITCHEN", true);
+      int len = strlen("WAKE_UP_KITCHEN");
+      
       pcSerial.println("Hello Uninova, how can I help?\n");
       group = GROUP_1;
       break;
@@ -374,280 +370,312 @@ void action()
     {
     case G1_AUTOMATIC:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "AUTOMATIC_MODE", true);
       mqttClient.publish(acdTopicPub, "AUTOMATIC_MODE");
       pcSerial.println("Automatic mode\n");
    
-      mqttClient.publish(topicVRCommand, "AUTOMATIC_MODE", true);
+     
 
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_MANUAL:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "MANUAL_MODE", true);
       mqttClient.publish(acdTopicPub, "MANUAL_MODE");
       pcSerial.println("Manual mode\n");
       
-      mqttClient.publish(topicVRCommand, "MANUAL_MODE", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_OPEN:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "OPEN", true);
       mqttClient.publish(acdTopicPub, "OPEN");
       pcSerial.println("Open\n");
 
-      mqttClient.publish(topicVRCommand, "OPEN", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_CLOSE:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "CLOSE", true);
       mqttClient.publish(acdTopicPub, "CLOSE");
       pcSerial.println("Close\n");
 
-      mqttClient.publish(topicVRCommand, "CLOSE", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_VOICE:
-      // write your action code here
+      // write your action code here 
+      mqttClient.publish(topicVRCommand, "OPEN_MODE", true);
       mqttClient.publish(acdTopicPub, "OPEN_MODE");
       pcSerial.println("Open mode\n");
       
-      mqttClient.publish(topicVRCommand, "OPEN_MODE", true);
+     
       
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_WINE:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Wine", true);
       mqttClient.publish(topicMoodSection, "4");
       
       mqttClient.publish(topicShelf1, "1");
       pcSerial.println("Wine\n");
 
-      mqttClient.publish(topicVRCommand, "Wine", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_COOKIES:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Cookies", true);
       mqttClient.publish(topicMoodSection, "4");
       
       mqttClient.publish(topicShelf1, "2");
       pcSerial.println("Cookies\n");
 
-      mqttClient.publish(topicVRCommand, "Cookies", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_APPLES:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Apples", true);
       mqttClient.publish(topicMoodSection, "4");
       
       mqttClient.publish(topicShelf1, "3");
       pcSerial.println("Apples\n");
 
-      mqttClient.publish(topicVRCommand, "Apples", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_PASTA:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Pasta", true);
       mqttClient.publish(topicMoodSection, "4");
 
       mqttClient.publish(topicShelf1, "4");
       pcSerial.println("Pasta\n");
 
-      mqttClient.publish(topicVRCommand, "Pasta", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_KETCHUP:
       // write your action code here
+      mqttClient.publish(topicVRCommand,"Ketchup", true);
       mqttClient.publish(topicMoodSection, "4");
       
       mqttClient.publish(topicShelf2, "1");
       pcSerial.println("Ketchup\n");
 
-      mqttClient.publish(topicVRCommand,"Ketchup", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_TOMATOS:
       // write your action code here
+      mqttClient.publish(topicVRCommand,"Ketchup", true);
       mqttClient.publish(topicMoodSection, "4");
       
       mqttClient.publish(topicShelf2, "2");
       pcSerial.println("Ketchup\n");
 
-      mqttClient.publish(topicVRCommand,"Ketchup", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_BEANS:
       // write your action code here
+      mqttClient.publish(topicVRCommand,"Ketchup", true);
       mqttClient.publish(topicMoodSection, "4");
       
       mqttClient.publish(topicShelf2, "3");
       pcSerial.println("Ketchup\n");
 
-      mqttClient.publish(topicVRCommand,"Ketchup", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_SUGAR:
       // write your action code here
+      mqttClient.publish(topicVRCommand,"Ketchup", true);
       mqttClient.publish(topicMoodSection, "4");
       
       mqttClient.publish(topicShelf2, "4");
       pcSerial.println("Ketchup\n");
 
-      mqttClient.publish(topicVRCommand,"Ketchup", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_SALT:
       // write your action code here
+      mqttClient.publish(topicVRCommand,"Ketchup", true);
       mqttClient.publish(topicMoodSection, "4");
       
       mqttClient.publish(topicShelf2, "2");
       pcSerial.println("Ketchup\n");
 
-      mqttClient.publish(topicVRCommand,"Ketchup", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_CANDY:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Candy", true);
       mqttClient.publish(topicMoodSection, "1");
       pcSerial.println("Candy\n");
 
-      mqttClient.publish(topicVRCommand, "Candy", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_PEPPER:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Pepper", true);
       mqttClient.publish(topicMoodSection, "2");
       pcSerial.println("Pepper\n");
 
-      mqttClient.publish(topicVRCommand, "Pepper", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_COKE:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Soda", true);
       mqttClient.publish(topicMoodSection, "3");
       pcSerial.println("Soda\n");
 
-      mqttClient.publish(topicVRCommand, "Soda", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_WATER:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Water", true);
       mqttClient.publish(topicMoodSection, "5");
       pcSerial.println("Water\n");
 
-      mqttClient.publish(topicVRCommand, "Water", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_BREAD:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Bread", true);
       mqttClient.publish(topicMoodSection, "6");
       pcSerial.println("Bread\n");
 
-      mqttClient.publish(topicVRCommand, "Bread", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_MILK:
-      // write your action code here
+      // write your action code here  
+      mqttClient.publish(topicVRCommand, "Milk", true);
       mqttClient.publish(topicMoodSection, "1");
       pcSerial.println("Milk\n");
 
-      mqttClient.publish(topicVRCommand, "Milk", true);
+    
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_SODA:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Soda", true);
       mqttClient.publish(topicMoodSection, "3");
       pcSerial.println("Soda\n");
 
-      mqttClient.publish(topicVRCommand, "Soda", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_SPAGHETTI:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Pasta", true);
       mqttClient.publish(topicMoodSection, "4");
 
       mqttClient.publish(topicShelf2, "1");
       pcSerial.println("Pasta\n");
 
-      mqttClient.publish(topicVRCommand, "Pasta", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_BACON:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Bacon", true);
       mqttClient.publish(topicMoodSection, "2");
       pcSerial.println("Bacon\n");
 
-      mqttClient.publish(topicVRCommand, "Bacon", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_FOIE_GRAS:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Foie Gras", true);
       mqttClient.publish(topicMoodSection, "3");
       pcSerial.println("Foie Gras\n");
 
-      mqttClient.publish(topicVRCommand, "Foie Gras", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_EGGS:
-      // write your action code here
+      // write your action code her
+      mqttClient.publish(topicVRCommand, "Eggs", true);
       mqttClient.publish(topicMoodSection, "5");
       pcSerial.println("Eggs\n");
 
-      mqttClient.publish(topicVRCommand, "Eggs", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_CROISSANT:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Croissant", true);
       mqttClient.publish(topicMoodSection, "6");
       pcSerial.println("Croissant\n");
 
-      mqttClient.publish(topicVRCommand, "Croissant", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_CHAMPAGNE:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Champagne", true);
       mqttClient.publish(topicMoodSection, "1");
       pcSerial.println("Champagne\n");
 
-      mqttClient.publish(topicVRCommand, "Champagne", true);
+     
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_PATE:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Pate", true);
       mqttClient.publish(topicMoodSection, "2");
       pcSerial.println("Pate\n");
 
-      mqttClient.publish(topicVRCommand, "Pate", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_HAPPY:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "HAPPY MOOD", true);
       mqttClient.publish(topicMoodStatus, "6");
       pcSerial.println("Happy mood\n");
 
-      mqttClient.publish(topicVRCommand, "HAPPY MOOD", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_SAD:
       // write your action code here
+      mqttClient.publish(topicVRCommand,"SAD MOOD", true);
       mqttClient.publish(topicMoodStatus, "2");
       pcSerial.println("sad Mood\n");
 
-      mqttClient.publish(topicVRCommand,"SAD MOOD", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_MOOD_OFF:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "Mood OFF", true);
       mqttClient.publish(topicMoodStatus, "0");
       pcSerial.println("Neutral mood\n");
       
-      mqttClient.publish(topicVRCommand, "Mood OFF", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     case G1_OK:
       // write your action code here
+      mqttClient.publish(topicVRCommand, "NEUTRAL MOOD", true);
       mqttClient.publish(topicMoodStatus, "4");
       pcSerial.println("Neutral mood\n");
       
-      mqttClient.publish(topicVRCommand, "NEUTRAL MOOD", true);
+      
       // group = GROUP_X\SET_X; <-- or jump to another group or wordset for composite commands
       break;
     }
