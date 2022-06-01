@@ -13,8 +13,8 @@ PubSubClient client(wifi_client);
 char ssid[] = SECRET_SSID;       
 char pass[] = SECRET_PASS; 
 
-BlockNot sectionTimer(6, SECONDS);
-BlockNot shelfTimer(6,  SECONDS);
+BlockNot sectionTimer(2, SECONDS);
+BlockNot shelfTimer(2,  SECONDS);
 
 ///////////////////////////////////////////////////////
 //.........MAIN LED STRIP INITIALIZATION.............//
@@ -73,6 +73,8 @@ const char* topicShelfColor_5= "shelf/color/5";//subscribe
 const char* topicShelfColor_6= "shelf/color/6";//subscribe
 const char* topicShelfColor_7= "shelf/color/7";//subscribe
 const char* acdTopic = "automatic_cabinet_door/controls";//subscribe
+const char* topicVoiceCommand = "voice_control/status";//subscribe
+
 
 
 
@@ -92,10 +94,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
   
   if(strcmp(topic,topicMoodSection) == 0){//mood sections topic  
     CRGB sec_color = CRGB(secColor[0], secColor[1], secColor[2]);
-
     int len = strlen(payloadChar);
     client.publish("mood/section/status", payloadChar, true);
-
     sectionTimer.RESET;
     
     
@@ -141,7 +141,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if(strcmp(topic, topicMoodStatus)==0){//led moods status
     CRGB aux_color;
     client.publish("mood/state/status", payloadChar, true);
-    
+    moodFlag = true; //assim nã é preciso ligar o mood primeiro
     if(strcmp(payloadChar, "1")==0){ //neutral mood
       Serial.println("Mood service ON"); 
       //Serial.println("waiting for input......"); 
@@ -259,7 +259,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
     CRGB aux_color;
     shelfTimer.RESET;
     client.publish("shelf1/status", payloadChar, true);
-
     
       if (strcmp(payloadChar, "1")==0) {
         Serial.println("WINE");
@@ -290,7 +289,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
     }
     if(strcmp(topic, topicShelf2) == 0){
       client.publish("shelf2/status", payloadChar, true);
-
       CRGB aux_color;
       shelfTimer.RESET;
       if(strcmp(payloadChar, "1")==0){
@@ -426,6 +424,22 @@ void callback(char* topic, byte* payload, unsigned int length) {
         shelfColor[7][i] = aux[i];  
       
     }
+    if(strcmp(topic,topicVoiceCommand) == 0){
+     //blinking all leds
+       for(int j = 0; j<2; j++){
+        for(int i = 0; i < NUM_LEDS; i ++){
+          leds[i] = CRGB::Blue;
+        }
+        FastLED.show();
+        delay(500);
+        for(int i = 0; i < NUM_LEDS; i ++){
+          leds[i] = CRGB::Black; 
+        }
+        FastLED.show();
+        delay(500);
+       } 
+      
+    }
 }
 
 void reconnect() {
@@ -459,6 +473,7 @@ void reconnect() {
   client.subscribe(topicShelfColor_6);
   client.subscribe(topicShelfColor_7);
   client.subscribe(acdTopic);
+  client.subscribe(topicVoiceCommand);
 
 
   
@@ -536,7 +551,6 @@ void loop() {
   handle_led_sec(section,moodColor_aux , main_led_map, NUM_LEDS, leds, 0);
   Serial.println("timer 1 off");
   section = -1;
-
  }
  if(shelfTimer.TRIGGERED){
   handle_led_sec(section_1, CRGB::Black, sec_led_map, NUM_LEDS_1, leds_1, 1); 
